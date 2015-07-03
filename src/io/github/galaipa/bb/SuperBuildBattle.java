@@ -101,6 +101,9 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
                 Vault = true;
             }
         }
+        else{
+            Vault = false;
+        }
         if(getConfig().getBoolean("Rewards.Command.Enabled")){
             Command = true;
             log.info("Command true");
@@ -124,7 +127,6 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
     @Override
   public void onDisable(){
       plugin = null;
-      reset();
   }
 
         @Override
@@ -237,8 +239,13 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
        Bukkit.getServer().getScheduler().cancelAllTasks();
        for (Player p : Jokalariak){
             p.setScoreboard(manager.getNewScoreboard());
-            p.teleport(SpawnPoint);
             returnInventory(p);
+            if(getConfig().getBoolean("BungeeCord.Enabled")){
+                BungeecordOptional.sendPlayer(p);
+            }
+            else{
+            p.teleport(SpawnPoint);
+            }
        }
        for(Team t : teams){
            t.resetArenas();
@@ -252,12 +259,6 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
        defaultValues();
    }
    public void resetPlayer(Player p){ 
-            taldeKopurua = taldeKopurua - 1;
-            returnInventory(p);
-            p.setGameMode(GameMode.SURVIVAL);
-            p.setScoreboard(manager.getNewScoreboard());
-            p.teleport(SpawnPoint);
-            Jokalariak.remove(p);
             Team t2 = null;
             for(Team t : teams){
                 if(t.checkPlayer(p) == true){
@@ -265,6 +266,27 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
                     break;
                 }
             }
+       if(inGame != true){
+           p.teleport(SpawnPoint);
+           taldeKopurua = taldeKopurua - 1;
+           teams.remove(t2);
+           teams2 = new Team[teams.size()];
+           teams2 = teams.toArray(teams2);
+           returnInventory(p);
+           Jokalariak.remove(p);
+           return;
+       }
+            taldeKopurua = taldeKopurua - 1;
+            returnInventory(p);
+            p.setGameMode(GameMode.SURVIVAL);
+            p.setScoreboard(manager.getNewScoreboard());
+            if(getConfig().getBoolean("BungeeCord.Enabled")){
+                BungeecordOptional.sendPlayer(p);
+            }
+            else{
+            p.teleport(SpawnPoint);
+            }
+            Jokalariak.remove(p);
                         t2.resetArenas();
                         if(wg == true){ WorldGuardOptional.WGregionRM(t2.getID());}
                         teams.remove(t2);

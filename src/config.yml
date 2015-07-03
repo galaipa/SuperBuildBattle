@@ -21,3 +21,6 @@ Rewards:
     Second: ''
     Third: ''
     Rest: ''
+BungeeCord:
+  Enabled: false
+  Hub: ''

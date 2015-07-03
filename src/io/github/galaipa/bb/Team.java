@@ -2,8 +2,6 @@
 package io.github.galaipa.bb;
 
 import io.github.galaipa.bb.Cuboid.CuboidDirection;
-import java.util.ArrayList;
-import java.util.HashMap;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;

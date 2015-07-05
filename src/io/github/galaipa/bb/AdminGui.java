@@ -17,6 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 public class AdminGui implements Listener{
         private int time = 1;
+        private int timeVote = 1;
         private int players1 = 1;
         private int players2 = 1;
         private Location l;
@@ -46,6 +47,7 @@ public class AdminGui implements Listener{
         public static void SetupInventory(Player p){
                            Inventory inv = p.getInventory();
                            inv.addItem(item(Material.STAINED_CLAY,3,1,ChatColor.GREEN + "Set building time"));
+                           inv.addItem(item(Material.STAINED_CLAY,3,1,ChatColor.GREEN + "Set voting time"));
                            inv.addItem(item(Material.STAINED_CLAY,3,1,ChatColor.GREEN + "Set minimum players"));
                            inv.addItem(item(Material.STAINED_CLAY,3,1,ChatColor.GREEN + "Set maximum players"));
                            inv.addItem(item(Material.STAINED_CLAY,3,1,ChatColor.GREEN + "Set lobby spawnpoint"));
@@ -80,6 +82,14 @@ public class AdminGui implements Listener{
                                inve.addItem(i);
                                p.updateInventory();
                                     }
+                           else if (izena.equalsIgnoreCase(ChatColor.GREEN + "Set voting time")){
+                               event.setCancelled(true);
+                               timeVote = i.getAmount()+1;
+                               inve.remove(i);
+                               i.setAmount(i.getAmount()+1);
+                               inve.addItem(i);
+                               p.updateInventory();
+                                    }
                            else if (izena.equalsIgnoreCase(ChatColor.GREEN + "Set minimum players")){
                                event.setCancelled(true);
                                players1= i.getAmount()+1;
@@ -101,6 +111,7 @@ public class AdminGui implements Listener{
                                time = 1;
                                players1 = 1;
                                players2 = 1;
+                               timeVote = 1;
                                p.getInventory().clear();
                                SetupInventory(p);
                                     }
@@ -114,7 +125,7 @@ public class AdminGui implements Listener{
                                if(l == null){
                                    p.sendMessage(ChatColor.YELLOW + "[BuildBattle]" +ChatColor.RED + "SpawnPoint missing");
                                }
-                               plugin.SaveSpawn(p.getLocation(l),time,players2,players1);
+                               plugin.SaveSpawn(p.getLocation(l),time,players2,players1,timeVote);
                                SetupInventory2(p,1);
                                     }
                            else if (event.getAction() == Action.RIGHT_CLICK_AIR && izena.equalsIgnoreCase(ChatColor.GREEN + "Point A") ||event.getAction() == Action.RIGHT_CLICK_AIR && izena.equalsIgnoreCase(ChatColor.GREEN + "Point B")){

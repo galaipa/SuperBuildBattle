@@ -35,6 +35,7 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
     int taldeKopuruMinimoa;
     int arenak;
     int time;
+    int timeVote;
     Boolean WorldGuard;
     Boolean PlayerPoints;
     Boolean Vault;
@@ -240,12 +241,7 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
        for (Player p : Jokalariak){
             p.setScoreboard(manager.getNewScoreboard());
             returnInventory(p);
-            if(getConfig().getBoolean("BungeeCord.Enabled")){
-                BungeecordOptional.sendPlayer(p);
-            }
-            else{
             p.teleport(SpawnPoint);
-            }
        }
        for(Team t : teams){
            t.resetArenas();
@@ -280,12 +276,7 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
             returnInventory(p);
             p.setGameMode(GameMode.SURVIVAL);
             p.setScoreboard(manager.getNewScoreboard());
-            if(getConfig().getBoolean("BungeeCord.Enabled")){
-                BungeecordOptional.sendPlayer(p);
-            }
-            else{
             p.teleport(SpawnPoint);
-            }
             Jokalariak.remove(p);
                         t2.resetArenas();
                         if(wg == true){ WorldGuardOptional.WGregionRM(t2.getID());}
@@ -313,8 +304,9 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
                     String gaia = gaiak.get(random.nextInt(gaiak.size()));
                     start(gaia);
    }
-   public void SaveSpawn(Location l, int time, int taldeKopuruMaximoa, int taldeKopuruMinimoa){
+   public void SaveSpawn(Location l, int time, int taldeKopuruMaximoa, int taldeKopuruMinimoa,int timeVote){
                 getConfig().set("Time", time);
+                getConfig().set("VotingTime", timeVote);
                 getConfig().set("MinPlayers", taldeKopuruMinimoa);
                 getConfig().set("MaxPlayers", taldeKopuruMaximoa);
                 getConfig().set("Spawn.World", l.getWorld().getName());
@@ -338,6 +330,9 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
                 taldeKopuruMaximoa = getConfig().getInt("MaxPlayers");
                 taldeKopuruMinimoa = getConfig().getInt("MinPlayers");
                 time = getConfig().getInt("Time");
+                if(getConfig().get("VotingTime") != null){
+                timeVote = getConfig().getInt("VotingTime");
+                }
                 String w22 = getConfig().getString("Spawn.World");
                 Double x22 = getConfig().getDouble("Spawn.X");
                 Double y22 = getConfig().getDouble("Spawn.Y");
@@ -543,7 +538,7 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
                     }
                     
                 }
-            }, 0, 20*30);
+            }, 0, 20*timeVote);
           }
           public void InventoryMenu(){
                       for(Player p : Jokalariak){

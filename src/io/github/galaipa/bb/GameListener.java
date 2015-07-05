@@ -22,6 +22,7 @@ public class GameListener implements Listener {
           @EventHandler(priority = EventPriority.LOW)
           public void onInventoryClick(PlayerInteractEvent event){
               if(plugin.voting == true){
+                  if(plugin.Jokalariak.contains(event.getPlayer())){
                  if(event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK ){
                         Player p = event.getPlayer();
                         event.setCancelled(true);
@@ -68,7 +69,7 @@ public class GameListener implements Listener {
                                         }
                         }
               }
-          } 
+          }} 
               else{
                   
               }

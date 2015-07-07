@@ -333,6 +333,9 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
                 if(getConfig().get("VotingTime") != null){
                 timeVote = getConfig().getInt("VotingTime");
                 }
+                else{
+                    timeVote = 30;
+                }
                 String w22 = getConfig().getString("Spawn.World");
                 Double x22 = getConfig().getDouble("Spawn.X");
                 Double y22 = getConfig().getDouble("Spawn.Y");
@@ -415,10 +418,26 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
                                 p2.sendMessage(ChatColor.GREEN +"[BuildBattle]" + ChatColor.YELLOW + "Your team mate: " + sender.getName());
                         }*/
                             if(taldeKopurua == taldeKopuruMinimoa){
-                                hasiera();
+                                minimunReached();
                             }
                             return;
                             }
+            }
+            public void minimunReached(){
+                 Bukkit.getScheduler().runTaskTimer(this, new Runnable() {
+                    int a = 0;
+                    public void run() {
+                        if(taldeKopuruMaximoa == taldeKopuruMinimoa){
+                            Bukkit.getServer().getScheduler().cancelAllTasks();
+                            hasiera();
+                        }else if(a == 10){
+                            Bukkit.getServer().getScheduler().cancelAllTasks();
+                            hasiera();
+                        }else{
+                            a++;
+                        }
+                    }   
+                }, 0, 20);
             }
             public void teleport(){
                 for(Team team : teams){
@@ -433,6 +452,7 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
                             }
                 }
             }
+            
             public void start(final String gaia){
                     inGame = true;
                     Broadcast(ChatColor.GREEN + getTr("13"));

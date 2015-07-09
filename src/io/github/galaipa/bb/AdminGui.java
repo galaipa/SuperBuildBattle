@@ -168,9 +168,7 @@ public class AdminGui implements Listener{
                            }
                            else if (izena.equalsIgnoreCase(ChatColor.GREEN + "Force STOP game")){
                                p.sendMessage(ChatColor.YELLOW + "[BuildBattle]" +ChatColor.GREEN + "You forced the game to stop" );
-                               for(Player p2 : plugin.Jokalariak){
-                                   plugin.resetPlayer(p2);
-                               }
+                               plugin.reset();
                                setup = false;
                                plugin.admin = false;
                                plugin.returnInventory(p);

@@ -2,6 +2,7 @@
 package io.github.galaipa.bb;
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -120,6 +122,18 @@ public class GameListener implements Listener {
                                     }
                                 }
                                 return null;
+            }
+            @EventHandler
+            public void onPlayerBucketEmpty(PlayerBucketEmptyEvent event) {
+                  if (plugin.inGame){
+                      if(plugin.Jokalariak.contains(event.getPlayer())){
+                          Location l = event.getBlockClicked().getLocation();
+                          l.setY(l.getY()+1);
+                          if(!getTeam(event.getPlayer()).getCuboid().contains(l)){
+                              event.setCancelled(true);
+                          }
+                      }
+                  }
             }
 }
 

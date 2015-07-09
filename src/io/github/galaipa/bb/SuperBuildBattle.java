@@ -242,6 +242,7 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
             p.setScoreboard(manager.getNewScoreboard());
             returnInventory(p);
             p.teleport(SpawnPoint);
+            p.setGameMode(GameMode.SURVIVAL);
        }
        for(Team t : teams){
            t.resetArenas();
@@ -592,8 +593,8 @@ public class SuperBuildBattle extends JavaPlugin implements Listener{
                   else if(talde2 == null){
                       talde2 = n.getName();
                   }
-                  else if(talde2 == null){
-                      taldeIrabazlea = n.getName();
+                  else if(talde3 == null){
+                      talde3 = n.getName();
                   }
               }
                 final Team t = taldeIrabazlea;
